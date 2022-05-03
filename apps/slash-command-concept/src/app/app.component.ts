@@ -22,11 +22,11 @@ export class AppComponent {
 
   // future extendable: could be configured from settings and async.
   public readonly registeredPlugins$: Observable<Record<string, Plugin>> = of({
-    giphy: { hint: '[search]', description: '', fn: () => alert('giphy not implemented') },
-    add: { hint: '[number] [num]', description: '', fn: () => alert('add not implemented') },
-    sub: { hint: '[number] [num]', description: '', fn: () => alert('subtract not implemented') },
-    div: { hint: '[number] [num]', description: '', fn: () => alert('divide not implemented') },
-    mul: { hint: '[number] [num]', description: '', fn: () => alert('multiply not implemented') },
+    giphy: { hint: '[search]', description: 'TODO', fn: () => alert('giphy not implemented') },
+    add: { hint: '[number] [num]', description: 'TODO', fn: () => alert('add not implemented') },
+    sub: { hint: '[number] [num]', description: 'TODO', fn: () => alert('subtract not implemented') },
+    div: { hint: '[number] [num]', description: 'TODO', fn: () => alert('divide not implemented') },
+    mul: { hint: '[number] [num]', description: 'TODO', fn: () => alert('multiply not implemented') },
     addcommand: { description: '', fn: () => alert('addcommand not implemented') }
   }).pipe(share())
 
@@ -42,7 +42,7 @@ export class AppComponent {
         ? []
         : txt === b[0]
           ? b.slice(1)
-          : b.filter(c => txt[0] === c[0] && c.toLowerCase().includes(txt.toLowerCase().substring(0, txt.indexOf("  "))))),
+          : b.filter(c => txt[0] === c[0] && c.toLowerCase().includes(txt.toLowerCase()))),
     )),
     mergeMap(keys => this.registeredPlugins$.pipe(map(pluginsObj => keys.map(a => a.trim()).map(name => {
       console.log(pluginsObj[name.slice(1)])
