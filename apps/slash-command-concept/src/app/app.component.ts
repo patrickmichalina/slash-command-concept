@@ -8,6 +8,10 @@ interface Plugin {
   input?: string
 }
 
+function stringsToNumbers(strs: string[]): number[] {
+  return strs.map(b => parseInt(b)).filter(b => !isNaN(b))
+}
+
 @Component({
   selector: "slash-command-concept-root",
   templateUrl: "./app.component.html",
@@ -25,10 +29,10 @@ export class AppComponent {
   // future extendable: could be configured from settings and async.
   public readonly registeredPlugins$: Observable<Record<string, Plugin>> = of({
     giphy: { hint: '[search]', description: 'TODO', fn: () => 'please setup giphy' },
-    add: { hint: '[num] [num]', description: 'TODO', fn: (...val: string[]) => val.map(b => parseInt(b)).filter(b => !isNaN(b)).reduce((acc, curr) => acc ? acc + curr : curr, 0) },
-    sub: { hint: '[num] [num]', description: 'TODO', fn: (...val: string[]) => val.map(b => parseInt(b)).filter(b => !isNaN(b)).reduce((acc, curr) => acc ? acc - curr : curr, 0) },
-    div: { hint: '[num] [num]', description: 'TODO', fn: (...val: string[]) => val.map(b => parseInt(b)).filter(b => !isNaN(b)).reduce((acc, curr) => acc ? acc / curr : curr, 0) },
-    mul: { hint: '[num] [num]', description: 'TODO', fn: (...val: string[]) => val.map(b => parseInt(b)).filter(b => !isNaN(b)).reduce((acc, curr) => acc ? acc * curr : curr, 0) },
+    add: { hint: '[num] [num]', description: 'TODO', fn: (...val: string[]) => stringsToNumbers(val).reduce((acc, curr) => acc ? acc + curr : curr, 0) },
+    sub: { hint: '[num] [num]', description: 'TODO', fn: (...val: string[]) => stringsToNumbers(val).reduce((acc, curr) => acc ? acc - curr : curr, 0) },
+    div: { hint: '[num] [num]', description: 'TODO', fn: (...val: string[]) => stringsToNumbers(val).reduce((acc, curr) => acc ? acc / curr : curr, 0) },
+    mul: { hint: '[num] [num]', description: 'TODO', fn: (...val: string[]) => stringsToNumbers(val).reduce((acc, curr) => acc ? acc * curr : curr, 0) },
     addcommand: { description: '', fn: () => alert('addcommand not implemented') }
   }).pipe(share())
 
