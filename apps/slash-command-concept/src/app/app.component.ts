@@ -44,13 +44,11 @@ export class AppComponent {
           ? b.slice(1)
           : b.filter(c => txt[0] === c[0] && c.toLowerCase().includes(txt.toLowerCase()))),
     )),
-    mergeMap(keys => this.registeredPlugins$.pipe(map(pluginsObj => keys.map(a => a.trim()).map(name => {
-      console.log(pluginsObj[name.slice(1)])
-      return {
-        ...pluginsObj[name.slice(1)],
-        name
-      }
-    }))))
+    mergeMap(keys => this.registeredPlugins$.pipe(
+      map(pluginsObj => keys
+        .map(a => a.trim())
+        .map(name => ({ ...pluginsObj[name.slice(1)], name })))
+    ))
   )
 
 
