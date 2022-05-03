@@ -1,12 +1,18 @@
-<input [formControl]="input" placeholder="/add 1 3">
+<textarea rows="20" [formControl]="chat"></textarea>
+<br>
+<form (ngSubmit)="submit(input)">
+  <label for="entry">Chat Input: </label>
+  <input id="entry" [formControl]="input" placeholder="/add 1 3">
+  <button type="button">Send</button>
+</form>
 
 <ul>
   <li *ngFor="let plugin of shownPlugins$ | async">
-    <a (click)="plugin.fn()">{{ plugin.name }} {{ plugin.hint }}</a>
+    <a (click)="plugin.fn(plugin.inputValue)">{{ plugin.name }} {{ plugin.hint }}</a>
   </li>
 </ul>
 
-<dialog open>
+<dialog>
   <form method="dialog">
     <input type="text" placeholder="your command">
     <br>

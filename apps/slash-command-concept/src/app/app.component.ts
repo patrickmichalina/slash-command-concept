@@ -3,8 +3,9 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { FormControl } from "@angular/forms";
 
 interface Plugin {
-  fn: () => void
+  fn: (value?: string) => void
   hint?: string
+  input?: string
 }
 
 @Component({
@@ -16,6 +17,7 @@ interface Plugin {
 export class AppComponent {
 
   public readonly input = new FormControl()
+  public readonly chat = new FormControl('')
 
   // future extendable: could be configured from settings and async.
   private readonly triggerKey$ = of('/')
@@ -23,10 +25,10 @@ export class AppComponent {
   // future extendable: could be configured from settings and async.
   public readonly registeredPlugins$: Observable<Record<string, Plugin>> = of({
     giphy: { hint: '[search]', description: 'TODO', fn: () => alert('giphy not implemented') },
-    add: { hint: '[number] [num]', description: 'TODO', fn: () => alert('add not implemented') },
-    sub: { hint: '[number] [num]', description: 'TODO', fn: () => alert('subtract not implemented') },
-    div: { hint: '[number] [num]', description: 'TODO', fn: () => alert('divide not implemented') },
-    mul: { hint: '[number] [num]', description: 'TODO', fn: () => alert('multiply not implemented') },
+    add: { hint: '[num] [num]', description: 'TODO', fn: (val?: string) => alert(val + 'add not implemented') },
+    sub: { hint: '[num] [num]', description: 'TODO', fn: () => alert('subtract not implemented') },
+    div: { hint: '[num] [num]', description: 'TODO', fn: () => alert('divide not implemented') },
+    mul: { hint: '[num] [num]', description: 'TODO', fn: () => alert('multiply not implemented') },
     addcommand: { description: '', fn: () => alert('addcommand not implemented') }
   }).pipe(share())
 
@@ -47,10 +49,15 @@ export class AppComponent {
     mergeMap(keys => this.registeredPlugins$.pipe(
       map(pluginsObj => keys
         .map(a => a.trim())
-        .map(name => ({ ...pluginsObj[name.slice(1)], name })))
+        .map(name => ({ ...pluginsObj[name.slice(1)], name, inputValue: this.input.value.slice(this.input.value.indexOf(" ")) })))
     ))
   )
 
-
+  submit(fc: FormControl): void {
+    const value = fc.value
+    if (!value || value === '' || value === null) return
+    this.chat.setValue(this.chat.value + "\n" + "user1: " + value)
+    fc.setValue('')
+  }
 
 }
