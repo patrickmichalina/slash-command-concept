@@ -88,11 +88,12 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/slash-command-concept"],
           "options": {
-            "jestConfig": "apps/slash-command-concept/jest.config.js",
+            "jestConfig": "apps/slash-command-concept/jest.config.ts",
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "slash-command-concept-e2e": {
       "root": "apps/slash-command-concept-e2e",
@@ -119,39 +120,9 @@
             "lintFilePatterns": ["apps/slash-command-concept-e2e/**/*.{js,ts}"]
           }
         }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular",
-    "packageManager": "npm"
-  },
-  "schematics": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
       },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nrwl/angular:component": {
-      "style": "scss"
+      "tags": [],
+      "implicitDependencies": ["slash-command-concept"]
     }
-  },
-  "defaultProject": "slash-command-concept"
+  }
 }
